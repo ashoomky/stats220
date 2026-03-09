@@ -16,6 +16,7 @@ this is my repo for STATS 220.
 
 ### contact me !
 website: [ashleeshum.com](ashleeshum.com)
+<br>
 youtube channel: [ashoomky](https://www.youtube.com/@ashoomky)
 
 here's a goofy meme that pretty much embodies my state ![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnZicnI4cG5rYTN5d3BpaTB5OGJ4dXprYXhiN2pkMGFxeWo5YnJpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0Dhf4yWPArs0XzxpEY/giphy.gif)
