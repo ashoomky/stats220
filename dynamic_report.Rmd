@@ -1,0 +1,143 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRC8WvZSWa5UAN8KPAbDuwSsBGlKWZQyvBk7BBduplsAEYLTTFgy08zMJ7ZwBUDn3JdCtHUSoghp0nE/pub?output=csv")
+
+latest_data <- logged_data %>% 
+  rename(
+    media_most_time_spent_on = 2,
+    minutes_today_on_media = 3,
+    time_of_day = 4,
+    purpose_of_media = 5
+  )
+
+time_spent_on_media <- latest_data$minutes_today_on_media
+
+```
+
+```{css}
+body {
+  font-family: Helvetica, sans-serif;
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #222222;
+  margin: 40px;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  color: #2E86AB;
+}
+
+h2 {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+p {
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+## Media Consumption Report
+
+This report analyses media consumption patterns based on an observational log I filled out in the past two weeks.
+It focuses on the time I spent on different forms of media, types of media I used, and the purpose of the media I used. 
+This will provide me with insights to patterns within my media usage, which will be helpful to become monitor trends. 
+
+--- 
+
+### How much time are people spending on media?
+```{r}
+min_time <- min(time_spent_on_media, na.rm = TRUE)
+max_time <- max(time_spent_on_media, na.rm = TRUE)
+mean_time <- mean(time_spent_on_media, na.rm = TRUE)
+
+ggplot(data = latest_data) +
+  geom_bar(aes(x = minutes_today_on_media), fill = "#A20403") + 
+  labs(
+    title = "Distribution of time spent on media",
+    subtitle = "Shows how many people fall into each time range (in minutes).",
+    caption = "Source: Google Form Observational Log Survey",
+    x = "Time spent (minutes)",
+    y = "Number of people"
+  )
+
+```
+
+The minimum time spent on media was `r min_time` minutes,
+while the maximum was `r max_time` minutes.
+
+The average (mean) time spent on media was `r mean_time` minutes.
+
+This suggests that use of media varied significantly over a period of two weeks, where at some points I was spending not a lot of time consuming media, and others a lot more. This could be due to external factors such as university, hangouts, or events.
+
+--- 
+
+### What type of media is most commonly used?
+
+```{r}
+ggplot(data = latest_data) +
+  geom_bar(aes(x = media_most_time_spent_on), fill = "#B40283") + 
+  labs(
+    title = "Most used media",
+    subtitle = "Shows which media platforms are used most frequently.",
+    caption = "Source: Google Form Observational Log Survey",
+    x = "Media Platform",
+    y = "Number of people"
+  )
+```
+
+This chart shows which media platforms I used most frequently.
+
+From the data, we can observe which platforms are most dominant in daily media consumption habits. In this bar graph we can see that I consumed TikTok and Instagram (social media) the most over the span of two weeks, with reading being the next type of media I consumed the most.
+
+--- 
+
+### When is media most commonly used?
+
+```{r}
+number_of_entries <- length(time_spent_on_media)
+
+ggplot(data = latest_data) +
+  geom_bar(aes(y = time_of_day), fill = "#2E86AB") + 
+  labs(
+    title = "Time of day media is used",
+    subtitle = "Shows when people tend to use media the most during the day.",
+    caption = "Source: Google Form Observational Log Survey",
+    x = "Number of people",
+    y = "Time of day"
+  )
+```
+
+This graph shows the times of day when my media usage is highest.
+
+It helps identify patterns in my daily behaviour, and when I am most likely to engage with media. From the graph we can infer that I spend the most time consuming media between the hours of 9pm - 6am, late night. The next most common time I consume media is the evening, between 5pm - 9pm. this suggests that I tend to consume media later during the day rather than in the early morning.
+
+However, I only have `r number_of_entries` entries in this observational log, which is too small of a sample size to come to any statistically significant conclusion.
+
+---
+
+### Summary of findings
+
+The data shows patterns in:
+
+- How much time people spend on media
+- What types of media are most popular
+- When people use media
+- Why people use media
+
+Overall, this provides insight into daily media consumption habits and highlights trends in behaviour.
+
